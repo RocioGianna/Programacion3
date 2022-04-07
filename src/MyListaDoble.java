@@ -7,6 +7,7 @@ public class MyListaDoble<T> implements Iterable<Object>{
 	
 	public MyListaDoble() {
 		this.first = null;
+		this.last = null;
 		this.size = 0;
 	}
 	
@@ -19,16 +20,14 @@ public class MyListaDoble<T> implements Iterable<Object>{
 	
 	public void insertFront(Object info) {
 		NodeD<T> tmp = new NodeD<T>(info, null, null);
-		if(isEmpty()) {
-			first.setAnterior(tmp);
-			tmp.setNext(this.first);
-			last = first;
-			this.first = tmp;			
-		}else {
-			tmp.setNext(this.first);
-			this.first = tmp;	
+		if(!isEmpty()) { 
+			first.setAnterior(tmp);		
+		}
+		if(last == null) {
 			last = first;
 		}
+		tmp.setNext(this.first);
+		this.first = tmp;	
 		size++;
 	}
 	
@@ -43,7 +42,7 @@ public class MyListaDoble<T> implements Iterable<Object>{
 	}
 
 	public boolean isEmpty() {
-		return first != null;
+		return first == null;
 	}
 	
 	public int size() {
@@ -101,7 +100,7 @@ public class MyListaDoble<T> implements Iterable<Object>{
 		while(it1.hasNext() && it2 != null && cont != (this.size() / 2)) {
 			if(it1.getInfo().equals(it2.getInfo())) {
 				it1.next();
-				it2.getAnterior();
+				it2 = it2.getAnterior();
 				cont++;
 			}else{
 				return false;

@@ -57,10 +57,13 @@ public class Main {
 		MyListaDoble<Node> l4 = new MyListaDoble<Node>();
 		
 		
-		l4.insertFront('a');
-		l4.insertFront('l');
-		l4.insertFront('l');
-		l4.insertFront('a');
+		l4.insertFront('n');
+		l4.insertFront('e');
+		l4.insertFront('u');
+		l4.insertFront('q');
+		l4.insertFront('u');
+		l4.insertFront('e');
+		l4.insertFront('n');
 		
 		l4.String();
 		
