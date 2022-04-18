@@ -19,8 +19,14 @@ public class Arbol {
 		return this == null;
 	}
 	
-	public Boolean hasElement(int x) {
-		
+	/* Integer getRoot(), boolean hasElem(Integer), boolean isEmpty(), void insert(Integer),
+	 * void printPosOrder(), void printPreOrder(), void	printInOrder(),
+	 * 
+	boolean delete(Integer), int getHeight(), 
+	List getLongestBranch(), List getFrontera(),
+	Integer getMaxElem(), List getElemAtLevel(int)*/
+	
+	public Boolean hasElement(int x) { //Complejidad O(n)
 		if(x > this.info && this.mayor != null) {
 			return this.getMayor().hasElement(x);
 		}else if(x < this.info && this.menor != null) {
@@ -32,7 +38,7 @@ public class Arbol {
 	    }
 	}
 	
-	public void insert(int i) {
+	public void insert(int i) { //Complejidad O(n)
 		if(i > this.info) {
 			if(this.getMayor() != null) {
 				this.getMayor().insert(i);
@@ -49,7 +55,7 @@ public class Arbol {
 		}
 	}
 	
-	public void printPosOrder(Arbol n) {
+	public void printPosOrder(Arbol n) { //Complejidad O(n)
 		if(n != null) {
 			printPosOrder(n.getMenor());
 			printPosOrder(n.getMayor());
@@ -57,7 +63,7 @@ public class Arbol {
 		}
 	}
 	
-	public void printPreOrder(Arbol n) {
+	public void printPreOrder(Arbol n) { //Complejidad O(n)
 		if(n != null) {
 			System.out.println(n.getInfo());
 			printPreOrder(n.getMenor());
@@ -65,7 +71,7 @@ public class Arbol {
 		}
 	}
 	
-	public void printInOrder(Arbol n) {
+	public void printInOrder(Arbol n) { //Complejidad O(n)
 		if(n != null) {
 			printInOrder(n.getMenor());
 			System.out.println(n.getInfo());
@@ -73,6 +79,8 @@ public class Arbol {
 		}
 	}
 	
+	
+	//getters y setters
 	public int getInfo() {
 		return info;
 	}
@@ -91,10 +99,4 @@ public class Arbol {
 	public void setMayor(Arbol mayor) {
 		this.mayor = mayor;
 	}
-	 
-	 
-	 
-	 
-	 
-	 
 }
