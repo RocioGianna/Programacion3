@@ -24,10 +24,9 @@ public class Arbol {
 	
 	/* Integer getRoot(), boolean hasElem(Integer), boolean isEmpty(), void insert(Integer),
 	 * void printPosOrder(), void printPreOrder(), void	printInOrder(), Integer getMaxElem(),
-	 * int getHeight(),
+	 * int getHeight(), List getLongestBranch(),
 	 * 
-	boolean delete(Integer),  
-	List getLongestBranch(), 
+	boolean delete(Integer),   
 	List getFrontera(),
 	List getElemAtLevel(int)*/
 	
@@ -113,24 +112,29 @@ public class Arbol {
 	}
 	
 	public ArrayList<Integer> getLongestBranch() {
-		ArrayList<Integer> aux = new ArrayList<>() ;
-		ArrayList<Integer> aux2 = new ArrayList<>() ;
+		ArrayList<Integer> list1 = new ArrayList<Integer>();
+		ArrayList<Integer> list2 = new ArrayList<Integer>();
 		
-		if(this.menor != null) {
-			aux.add(this.info);
-			aux =  this.getMenor().getLongestBranch();
-		}
-		if(this.mayor != null) {
-			aux2.add(this.info);
-			aux2 = this.getMayor().getLongestBranch();
-		}
-		
-		if(aux.size() > aux2.size()) {
-			return aux;
-		}else if(aux.size() < aux2.size()) {
-			return aux2;
+		if(menor != null) {
+			list1.add(this.getInfo());
+			list2.add(this.getInfo());
+			
+			list1.addAll(menor.getLongestBranch());
+			
+			if(mayor != null) {
+				list2.addAll(mayor.getLongestBranch());
+			}
+		}else if(mayor != null) {
+			list1.add(this.getInfo());
+			list1.addAll(mayor.getLongestBranch());
 		}else {
-			return aux;
+			list1.add(this.getInfo());
+		}
+		
+		if(list1.size() > list2.size()) {
+			return list1;
+		}else {
+			return list2;
 		}
 		
 	}
