@@ -1,5 +1,8 @@
 package arboles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Arbol {
 	 private int info;
 	 private Arbol menor;
@@ -20,11 +23,13 @@ public class Arbol {
 	}
 	
 	/* Integer getRoot(), boolean hasElem(Integer), boolean isEmpty(), void insert(Integer),
-	 * void printPosOrder(), void printPreOrder(), void	printInOrder(),
+	 * void printPosOrder(), void printPreOrder(), void	printInOrder(), Integer getMaxElem(),
+	 * int getHeight(),
 	 * 
-	boolean delete(Integer), int getHeight(), 
-	List getLongestBranch(), List getFrontera(),
-	Integer getMaxElem(), List getElemAtLevel(int)*/
+	boolean delete(Integer),  
+	List getLongestBranch(), 
+	List getFrontera(),
+	List getElemAtLevel(int)*/
 	
 	public Boolean hasElement(int x) { //Complejidad O(n)
 		if(x > this.info && this.mayor != null) {
@@ -78,6 +83,58 @@ public class Arbol {
 			printInOrder(n.getMayor());
 		}
 	}
+	
+	public int getMaxElem() {
+		int max = this.info;
+		if( this.mayor != null && max < this.getMayor().getInfo()) {
+			max = this.getMayor().getMaxElem();
+		}
+		return max;
+	}
+	
+	public int getHeight() {
+		int heightIzq = 0;
+		int heightDer = 0;
+		
+		if(this.menor != null) {
+			heightIzq = 1 + this.getMenor().getHeight();
+		}
+		if(this.mayor != null) {
+			heightDer = 1 + this.getMayor().getHeight();
+		}
+		
+		if(heightIzq > heightDer) {
+			return heightIzq;
+		}else if(heightIzq < heightDer){
+			return heightDer;
+		}else {
+			return heightDer;			
+		}
+	}
+	
+	public ArrayList<Integer> getLongestBranch() {
+		ArrayList<Integer> aux = new ArrayList<>() ;
+		ArrayList<Integer> aux2 = new ArrayList<>() ;
+		
+		if(this.menor != null) {
+			aux.add(this.info);
+			aux =  this.getMenor().getLongestBranch();
+		}
+		if(this.mayor != null) {
+			aux2.add(this.info);
+			aux2 = this.getMayor().getLongestBranch();
+		}
+		
+		if(aux.size() > aux2.size()) {
+			return aux;
+		}else if(aux.size() < aux2.size()) {
+			return aux2;
+		}else {
+			return aux;
+		}
+		
+	}
+	
 	
 	
 	//getters y setters
