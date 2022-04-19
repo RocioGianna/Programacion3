@@ -13,6 +13,16 @@ public class Arbol {
 		this.menor = null;
 		this.mayor = null;
 	}
+	public Arbol() {
+		this.info = 0;
+		this.menor = null;
+		this.mayor = null;
+	}
+	public Arbol(ArrayList<Integer> valores) {
+		for(Integer v: valores) {
+			insert(v);
+		}
+	}
 	
 	public int getRoot() {
 		return this.info;
@@ -42,6 +52,9 @@ public class Arbol {
 	}
 	
 	public void insert(int i) { //Complejidad O(n)
+		if(this.info == 0) {
+			this.info = i;
+		}
 		if(i > this.info) {
 			if(this.getMayor() != null) {
 				this.getMayor().insert(i);
