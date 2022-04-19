@@ -24,11 +24,10 @@ public class Arbol {
 	
 	/* Integer getRoot(), boolean hasElem(Integer), boolean isEmpty(), void insert(Integer),
 	 * void printPosOrder(), void printPreOrder(), void	printInOrder(), Integer getMaxElem(),
-	 * int getHeight(), List getLongestBranch(),
+	 * int getHeight(), List getLongestBranch(), List getFrontera(), List getElemAtLevel(int),
 	 * 
-	boolean delete(Integer),   
-	List getFrontera(),
-	List getElemAtLevel(int)*/
+	   boolean delete(Integer)  
+	*/
 	
 	public Boolean hasElement(int x) { //Complejidad O(n)
 		if(x > this.info && this.mayor != null) {
@@ -137,6 +136,41 @@ public class Arbol {
 			return list2;
 		}
 		
+	}
+	
+	public ArrayList<Integer> getFrontera(){ //Complejidad O(n)
+		ArrayList<Integer> aux = new ArrayList<Integer>();
+		
+		if(menor == null && mayor == null) {
+			aux.add(this.info);
+		}
+		if(menor != null) {
+			aux.addAll(getMenor().getFrontera());
+		}
+		if(mayor != null) {
+			aux.addAll(getMayor().getFrontera());
+		}
+
+		return aux;
+		
+	}
+	
+	public ArrayList<Integer> getElemAtLevel(int lvl){ //Complejidad O(n)
+		ArrayList<Integer> aux = new ArrayList<Integer>();
+		int nivel = 0;
+		
+		if(nivel != lvl) {
+			if(menor != null) {
+				aux.addAll(getMenor().getElemAtLevel(lvl - 1));
+			}
+			if(mayor != null) {
+				aux.addAll(getMayor().getElemAtLevel(lvl - 1));
+			}
+		}else {
+			aux.add(this.info);
+		}
+		
+		return aux;
 	}
 	
 	

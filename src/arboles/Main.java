@@ -21,12 +21,14 @@ public class Main {
 		System.out.println("order");
 		a1.printInOrder(a1);
 		
-		System.out.println("Esta el num " + a1.hasElement(7));
-		System.out.println("Esta el num " + a1.hasElement(5));	
+		System.out.println("Esta el num 7: " + a1.hasElement(7));
+		System.out.println("Esta el num 5: " + a1.hasElement(5));	
 		System.out.println("El elemento más grande: " + a1.getMaxElem());
 		System.out.println("Altura del arbol: " + a1.getHeight());
+		System.out.println("La rama más larga es: " + a1.getLongestBranch());
+		System.out.println("Las hojas del árbol son: " + a1.getFrontera());
+		System.out.println("Los elementos del nivel son: " + a1.getElemAtLevel(2));
 		
-		System.out.println(a1.getLongestBranch());
 	}
 
 }
