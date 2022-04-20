@@ -186,6 +186,51 @@ public class Arbol {
 		return aux;
 	}
 	
+	public void delete(int i) {
+
+		if(menor != null && this.info > i) { // Rama izquierda
+			if(getMenor().getInfo() != i) { // parte recursiva avanza si no es el valor que se busca
+				getMenor().delete(i);
+			}else if(getMenor().getMenor() != null && getMenor().getMayor() != null) {  // pregunta si tiene dos hijos
+				Arbol index = buscarMayorDeIzquierda(getMenor());
+				index.menor = getMenor().getMenor();
+				this.menor = index;
+			}else if(getMenor().getMenor() != null) {    // pregunta si tiene un hijo menor
+				this.menor = getMenor().getMenor();
+			}else if(getMenor().getMayor() != null) { // pregunta si tiene un hijo mayor
+				this.menor = getMenor().getMayor();
+			}else { // borra
+				this.menor = null;
+			}
+		} else if(mayor != null && this.info < i ) { // hace lo mismo que el de arriba pero por la rama derecha 
+			if(getMayor().getInfo() != i) {
+				getMayor().delete(i);
+			}else if(getMayor().getMenor() != null && getMayor().getMayor() != null) {  
+				Arbol index = buscarMayorDeIzquierda(getMayor());
+				index.mayor = getMayor().getMenor();
+				this.mayor = index;
+			}else if(getMayor().getMayor() != null) {
+				this.mayor = getMayor().getMayor();
+			}else if(getMayor().getMenor() != null) {
+				this.mayor = getMayor().getMenor();
+			}else {
+				this.mayor = null;
+			}
+		}
+		
+	}  
+	
+	public Arbol buscarMayorDeIzquierda(Arbol a) {
+		Arbol aux = new Arbol();
+		
+		if(a.getMayor() != null) {
+			aux = buscarMayorDeIzquierda(a.getMayor());
+		}else {
+			aux = a;
+		}
+		
+		return aux;
+	}
 	
 	
 	//getters y setters
