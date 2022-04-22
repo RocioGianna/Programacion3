@@ -27,6 +27,10 @@ public class Main {
 		a1.insert(33);
 		a1.insert(40);
 		a1.insert(60);
+		a1.insert(80);
+		a1.insert(4);
+		a1.insert(6);
+		a1.insert(3);
 		
 		System.out.println("pos");
 		a1.printPosOrder(a1);
@@ -56,14 +60,13 @@ public class Main {
 		System.out.println("Las hojas del árbol son: " + a2.getFrontera());
 		System.out.println("Los elementos del nivel son: " + a2.getElemAtLevel(2));
 		
+		System.out.println("pos");
+		a1.printPosOrder(a1);
 		
-		System.out.println("order");
-		a1.printInOrder(a1);
-		
-		a1.delete(70);
-		
-		System.out.println("order");
-		a1.printInOrder(a1);
+		a1.borrar(33);
+		//a1.delete(70);
+		System.out.println("pos");
+		a1.printPosOrder(a1);
 	}
 
 }

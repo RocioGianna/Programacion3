@@ -35,9 +35,7 @@ public class Arbol {
 	/* Integer getRoot(), boolean hasElem(Integer), boolean isEmpty(), void insert(Integer),
 	 * void printPosOrder(), void printPreOrder(), void	printInOrder(), Integer getMaxElem(),
 	 * int getHeight(), List getLongestBranch(), List getFrontera(), List getElemAtLevel(int),
-	 * 
-	   boolean delete(Integer)  
-	*/
+	 * void delete(Integer)*/
 	
 	public Boolean hasElement(int x) { //Complejidad O(n)
 		if(x > this.info && this.mayor != null) {
@@ -76,6 +74,8 @@ public class Arbol {
 			printPosOrder(n.getMenor());
 			printPosOrder(n.getMayor());
 			System.out.println(n.getInfo());
+		}else {
+			System.out.println("-");
 		}
 	}
 	
@@ -187,14 +187,13 @@ public class Arbol {
 	}
 	
 	public void delete(int i) {
-
 		if(menor != null && this.info > i) { // Rama izquierda
 			if(getMenor().getInfo() != i) { // parte recursiva avanza si no es el valor que se busca
 				getMenor().delete(i);
 			}else if(getMenor().getMenor() != null && getMenor().getMayor() != null) {  // pregunta si tiene dos hijos
-				Arbol index = buscarMayorDeIzquierda(getMenor());
-				index.menor = getMenor().getMenor();
-				this.menor = index;
+				Arbol index = buscarMayor(getMenor());
+				getMenor().setInfo(index.getInfo());
+				getMenor().getMayor().delete(index.getInfo());
 			}else if(getMenor().getMenor() != null) {    // pregunta si tiene un hijo menor
 				this.menor = getMenor().getMenor();
 			}else if(getMenor().getMayor() != null) { // pregunta si tiene un hijo mayor
@@ -206,9 +205,9 @@ public class Arbol {
 			if(getMayor().getInfo() != i) {
 				getMayor().delete(i);
 			}else if(getMayor().getMenor() != null && getMayor().getMayor() != null) {  
-				Arbol index = buscarMayorDeIzquierda(getMayor());
-				index.mayor = getMayor().getMenor();
-				this.mayor = index;
+				Arbol index = buscarMayor(getMayor().getMenor());
+				getMayor().setInfo(index.getInfo());
+				getMayor().getMenor().delete(index.getInfo());
 			}else if(getMayor().getMayor() != null) {
 				this.mayor = getMayor().getMayor();
 			}else if(getMayor().getMenor() != null) {
@@ -220,16 +219,68 @@ public class Arbol {
 		
 	}  
 	
-	public Arbol buscarMayorDeIzquierda(Arbol a) {
-		Arbol aux = new Arbol();
-		
-		if(a.getMayor() != null) {
-			aux = buscarMayorDeIzquierda(a.getMayor());
+	public void borrar(int i) {
+		if(menor != null && this.info > i) { 
+			if(getMenor().getInfo() != i) { 
+				getMenor().borrar(i);
+			}else if(getMenor().getMenor() != null && getMenor().getMayor() != null) { 
+				Arbol index = buscarMayor(getMenor().getMenor());	
+				this.menor.setInfo(index.getInfo());
+				this.menor.menor.borrar(index.getInfo());
+			}else if(getMenor().getMenor() != null) {    
+				this.menor = getMenor().getMenor();
+			}else if(getMenor().getMayor() != null) { 
+				this.menor = getMenor().getMayor();
+			}else { // borra
+				this.menor = null;
+			}
+		} else if(mayor != null && this.info < i ) {  
+			if(getMayor().getInfo() != i) {
+				getMayor().borrar(i);
+			}else if(getMayor().getMenor() != null && getMayor().getMayor() != null) {  
+				Arbol index = buscarMayor(getMayor().getMenor());
+				this.mayor.setInfo(index.getInfo());
+				this.mayor.menor.delete(index.getInfo());
+				
+			}else if(getMayor().getMayor() != null) {
+				this.mayor = getMayor().getMayor();
+			}else if(getMayor().getMenor() != null) {
+				this.mayor = getMayor().getMenor();
+			}else {
+				this.mayor = null;
+			}
 		}else {
-			aux = a;
+			if( menor != null && mayor !=null &&this.info == i  ) {
+				Arbol index = buscarMayor(getMenor());
+				this.setInfo(index.getInfo());
+				this.menor.delete(index.getInfo());
+					
+			}else if(getMayor() != null) {
+				this.mayor = getMayor().getMayor();
+			}else if(getMenor() != null) {
+				this.mayor = getMayor().getMenor();
+			}else {
+				this.setInfo(-1); //cambiarlo a Integer para poder ponerle null
+			}
 		}
-		
+	}
+	
+	public Arbol buscarMenorDeDerecha(Arbol a) {
+		Arbol aux = new Arbol();
+		if(a.getMenor()!=null) {
+			aux = buscarMenorDeDerecha(a.getMenor());
+		}else {
+			aux=a;
+		}
 		return aux;
+	}
+	
+	public Arbol buscarMayor(Arbol a) {
+		if(a.getMayor() != null) {
+			return buscarMayor(a.getMayor());
+		}else {
+			return a;
+		}
 	}
 	
 	
