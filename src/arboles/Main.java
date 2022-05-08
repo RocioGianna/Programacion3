@@ -63,8 +63,8 @@ public class Main {
 		System.out.println("pos");
 		a1.printPosOrder(a1);
 		
-		a1.borrar(33);
-		//a1.delete(70);
+		//a1.borrar(33);
+		a1.delete(70);
 		System.out.println("pos");
 		a1.printPosOrder(a1);
 	}

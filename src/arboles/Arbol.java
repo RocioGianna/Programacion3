@@ -191,9 +191,9 @@ public class Arbol {
 			if(getMenor().getInfo() != i) { // parte recursiva avanza si no es el valor que se busca
 				getMenor().delete(i);
 			}else if(getMenor().getMenor() != null && getMenor().getMayor() != null) {  // pregunta si tiene dos hijos
-				Arbol index = buscarMayor(getMenor());
+				Arbol index = buscarMayor(getMenor().getMenor());
 				getMenor().setInfo(index.getInfo());
-				getMenor().getMayor().delete(index.getInfo());
+				getMenor().getMenor().delete(index.getInfo());
 			}else if(getMenor().getMenor() != null) {    // pregunta si tiene un hijo menor
 				this.menor = getMenor().getMenor();
 			}else if(getMenor().getMayor() != null) { // pregunta si tiene un hijo mayor
@@ -214,6 +214,19 @@ public class Arbol {
 				this.mayor = getMayor().getMenor();
 			}else {
 				this.mayor = null;
+			}
+		}else {
+			if( menor != null && mayor !=null &&this.info == i  ) {
+				Arbol index = buscarMayor(getMenor());
+				this.setInfo(index.getInfo());
+				this.menor.delete(index.getInfo());
+					
+			}else if(getMayor() != null) {
+				this.mayor = getMayor().getMayor();
+			}else if(getMenor() != null) {
+				this.mayor = getMayor().getMenor();
+			}else {
+				this.setInfo(-1); //cambiarlo a Integer para poder ponerle null
 			}
 		}
 		
