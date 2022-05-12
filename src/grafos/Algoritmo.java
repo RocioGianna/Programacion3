@@ -61,9 +61,7 @@ public class Algoritmo {
 		
 		return existe;
 	}
-	/*Escribir un algoritmo que, dado un grafo dirigido y dos vértices i, j de este grafo, devuelva el
-camino simple (sin ciclos) de mayor longitud del vértice i al vértice j. Puede suponerse que
-el grafo de entrada es acíclico*/
+	//Ejercicio 4
 	public ArrayList<Integer> caminoMasLargo(int origen, int destino){
 		ArrayList<Integer> arcos = new ArrayList<>();
 					
@@ -108,7 +106,97 @@ el grafo de entrada es acíclico*/
 		
 		return caminoPosible;
 	}
-
+	
+	//Ejercicio 5
+	public ArrayList<Integer> verticesQueLlegan(int destino){
+		ArrayList<Integer> arcos = new ArrayList<>();
+					
+		Iterator<Integer> it = this.grafo.obtenerVertices();
+		while (it.hasNext()) {
+			int verticeId = it.next();
+			colores.put(verticeId, "blanco");
+		}
+		
+		it = this.grafo.obtenerVertices();
+		while (it.hasNext()) {
+			int verticeId = it.next();
+			if (colores.get(verticeId).equals("blanco"))
+				arcos.addAll(ej5Visitar(verticeId, destino));
+		}	
+			return arcos;
+		
+	}
+		
+	public ArrayList<Integer> ej5Visitar(int vertice, int destino) {
+		ArrayList<Integer> verticesConCamino = new ArrayList<>();
+		if(vertice != destino) {
+			colores.put(vertice, "amarillo");
+			
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+			
+			while(it.hasNext()) {
+				int adyacente = it.next();
+				if (colores.get(adyacente).equals("blanco")) {								
+					verticesConCamino.addAll(ej5Visitar(adyacente, destino));
+					if(!verticesConCamino.contains(vertice)) {
+						verticesConCamino.add(vertice);
+					}
+				}
+			}
+		}
+		
+		
+		return verticesConCamino;
+	}
+	
+	/*Ejercicio 6.
+	Supongamos una conexión entre computadoras (1, ... ,n) que se encuentra modelada
+	mediante un grafo. Se requiere, si existe, dar una conexión entre dos computadoras a y b
+	existentes sabiendo que la computadora i está fuera de servicio.*/
+	public ArrayList<Integer> caminoAlternativo(int origen, int destino, int pcRota){
+		ArrayList<Integer> arcos = new ArrayList<>();
+					
+		Iterator<Integer> it = this.grafo.obtenerVertices();
+		while (it.hasNext()) {
+			int verticeId = it.next();
+			if(verticeId == pcRota) {
+				colores.put(verticeId, "negro");
+			}else {
+				colores.put(verticeId, "blanco");
+			}
+		}
+		
+		int verticeId = origen;
+		if (colores.get(verticeId).equals("blanco"))
+			arcos.addAll(ej6Visitar(verticeId, origen, destino));
+		
+		return arcos;
+		
+	}
+		
+	public ArrayList<Integer> ej6Visitar(int vertice, int origen,  int destino) {
+		ArrayList<Integer> verticesConCamino = new ArrayList<>();
+		if(vertice==destino && !verticesConCamino.contains(vertice)) {
+			verticesConCamino.add(vertice);
+		}else {
+			colores.put(vertice, "amarillo");
+			
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+			
+			while(it.hasNext() && !colores.get(origen).equals("amarillo")) {
+				int adyacente = it.next();
+				if (colores.get(adyacente).equals("blanco")) {								
+					verticesConCamino.addAll(ej6Visitar(adyacente, origen, destino));
+					if(!verticesConCamino.contains(vertice)) {
+						verticesConCamino.add(vertice);
+					}
+				}
+			}
+		}
+		
+		
+		return verticesConCamino;
+	}
 	
 	
 	
