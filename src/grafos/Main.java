@@ -4,7 +4,9 @@ public class Main {
 
 	public static void main(String[] args) {
 	GrafoDirigido<Integer> g1 = new GrafoDirigido<Integer>();
+	GrafoNoDirigido<Integer> g2 = new GrafoNoDirigido<Integer>();
 	Algoritmo a1 = new Algoritmo(g1);
+	Algoritmo a2 = new Algoritmo(g2);
 	
 	g1.agregarVertice(1);
 	g1.agregarVertice(2);
@@ -29,8 +31,27 @@ public class Main {
 	System.out.println(a1.caminoAlternativo(1, 5, 4));
 	System.out.println(a1.caminoMasCorto(1, 7));
 	
+	/************************************************/
 	
+	g2.agregarVertice(1);
+	g2.agregarVertice(2);
+	g2.agregarVertice(3);
+	g2.agregarVertice(4);
+	g2.agregarVertice(5);
+	g2.agregarVertice(7);
 	
+	g2.agregarArco(1, 2, 0);//tandil--mdp
+	g2.agregarArco(1, 3, 1);//tandil--azul
+	g2.agregarArco(2, 5, 4);//mdp--bsas
+	g2.agregarArco(3, 5, 5);//azul--bsas
+	g2.agregarArco(3, 4, 5);//azul--flores
+	g2.agregarArco(3, 6, 6);//azul--rauch
+	g2.agregarArco(4, 6, 7);//flores--rauch
+	g2.agregarArco(5, 7, 8);//bsas--la plata
+	
+	Arco aa = new Arco(4,6,7);
+	
+	System.out.println(a2.rutasAlternativas(5, 1, aa));
 	}
 
 }

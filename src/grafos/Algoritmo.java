@@ -262,7 +262,44 @@ public class Algoritmo {
 	tránsito.
 	*/
 	
+	public ArrayList<Integer> rutasAlternativas(int origen, int destino, Arco<?> corte) {
+		ArrayList<Integer> rutas = new ArrayList<>();
+
+		Iterator<Integer> it = this.grafo.obtenerVertices();
+		while (it.hasNext()) {
+			int verticeId = it.next();
+			colores.put(verticeId, "blanco");
+		}
+		
+		int cortado = corte.getVerticeOrigen();
+		
+		int vertice = origen;
+		if (colores.get(vertice).equals("blanco"))
+			rutas.addAll(ej9visita(vertice, origen, destino, cortado));
+		
+		return rutas;
+	}
 	
+	public ArrayList<Integer> ej9visita(int vertice, int origen, int destino, int cortado) {
+		ArrayList<Integer> rutasPosibles = new ArrayList<>();
+		if(vertice == destino) {
+			rutasPosibles.add(vertice);
+		}else {
+			colores.put(vertice, "amarillo");
+	
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+			while(it.hasNext()) {
+				int adyacente = it.next();
+				if(adyacente != cortado) {
+					if (colores.get(adyacente).equals("blanco"))
+						rutasPosibles.add(vertice);
+						rutasPosibles.addAll(ej9visita(adyacente, origen, destino, cortado));
+				}
+			}
+		}
+		
+		return rutasPosibles;
+	}
 	
 	
 	
