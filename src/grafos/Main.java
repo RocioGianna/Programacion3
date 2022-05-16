@@ -27,6 +27,7 @@ public class Main {
 	System.out.println(a1.caminoMasLargo(1, 5));
 	System.out.println(a1.verticesQueLlegan(5));
 	System.out.println(a1.caminoAlternativo(1, 5, 4));
+	System.out.println(a1.caminoMasCorto(1, 7));
 	
 	
 	

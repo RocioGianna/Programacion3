@@ -168,35 +168,107 @@ public class Algoritmo {
 		
 		int verticeId = origen;
 		if (colores.get(verticeId).equals("blanco"))
-			arcos.addAll(ej6Visitar(verticeId, origen, destino));
+			arcos.addAll(ej6Visitar(verticeId, destino));
 		
 		return arcos;
 		
 	}
 		
-	public ArrayList<Integer> ej6Visitar(int vertice, int origen,  int destino) {
+	public ArrayList<Integer> ej6Visitar(int vertice, int destino) {
 		ArrayList<Integer> verticesConCamino = new ArrayList<>();
-		if(vertice==destino && !verticesConCamino.contains(vertice)) {
+		ArrayList<Integer> aux = new ArrayList<>();
+		Boolean encontro = false;
+		if(vertice==destino) {
 			verticesConCamino.add(vertice);
 		}else {
 			colores.put(vertice, "amarillo");
 			
 			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
 			
-			while(it.hasNext() && !colores.get(origen).equals("amarillo")) {
+			while(it.hasNext() && !encontro) {
 				int adyacente = it.next();
-				if (colores.get(adyacente).equals("blanco")) {								
-					verticesConCamino.addAll(ej6Visitar(adyacente, origen, destino));
-					if(!verticesConCamino.contains(vertice)) {
+				if (colores.get(adyacente).equals("blanco")) {
+					aux = ej6Visitar(adyacente,destino);
+					if(!aux.isEmpty()) {
 						verticesConCamino.add(vertice);
+						verticesConCamino.addAll(aux);
+						encontro = true;
+					}
+				}
+			}
+		}
+		return verticesConCamino;
+	}
+	
+	//Ejercicio 7.
+		public ArrayList<Integer> caminoMasCorto(int origen, int destino){
+		ArrayList<Integer> arcos = new ArrayList<>();
+					
+		Iterator<Integer> it = this.grafo.obtenerVertices();
+		while (it.hasNext()) {
+			int verticeId = it.next();
+			colores.put(verticeId, "blanco");
+		}
+		int vertice = origen;
+		arcos.addAll(ej7visita(vertice, destino));
+		
+		return arcos;
+		
+	}
+		
+	public ArrayList<Integer> ej7visita(int vertice, int destino) {
+		ArrayList<Integer> caminoPosible = new ArrayList<>();
+		ArrayList<Integer> caminoAdyacente = new ArrayList<>();	
+		if(vertice==destino) {
+			caminoPosible.add(vertice);
+		}else {
+			colores.put(vertice, "amarillo");
+			
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+			
+			while(it.hasNext()) {
+				int adyacente = it.next();
+				if (colores.get(adyacente).equals("blanco")) {
+					
+					caminoAdyacente.add(vertice);				
+					caminoAdyacente.addAll(ej7visita(adyacente, destino));
+					
+					if(caminoPosible.isEmpty()) {
+						caminoPosible.addAll(caminoAdyacente);
+					}else if(caminoPosible.size()>=caminoAdyacente.size()) {
+						caminoPosible.clear();
+						caminoPosible.addAll(caminoAdyacente);
+						
 					}
 				}
 			}
 		}
 		
 		
-		return verticesConCamino;
+		return caminoPosible;
 	}
+	
+	/*Ejercicio 8
+	Dados un grafo G con sus vértices rotulados con colores y dos vértices v1 y v2, escriba un
+	algoritmo que encuentre un camino desde el vértice v1 al vértice v2 tal que no pase por
+	vértices rotulados con el color rojo.
+	*/
+	
+	
+	/*Ejercicio 9
+	Dado un grafo no orientado que modela las rutas de la provincia de Buenos Aires, devolver
+	todos los caminos alternativos que se pueden tomar para ir desde la ciudad de Buenos
+	Aires a la ciudad de Tandil, considerando que en el tramo Las Flores-Rauch está cortado al
+	tránsito.
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
