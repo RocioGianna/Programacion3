@@ -48,6 +48,8 @@ public class Main {
 	g2.agregarArco(3, 6, 6);//azul--rauch
 	g2.agregarArco(4, 6, 7);//flores--rauch
 	g2.agregarArco(5, 7, 8);//bsas--la plata
+	g2.agregarArco(5, 6, 9);//bsas--rauch
+	g2.agregarArco(7, 1, 10); //la plata--tandil
 	
 	Arco aa = new Arco(4,6,7);
 	
