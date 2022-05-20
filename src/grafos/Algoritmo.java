@@ -298,6 +298,11 @@ public class Algoritmo {
 	*/
 	
 	
+	
+	
+	
+	
+	
 	//Ejercicio 9
 	public ArrayList<Integer> rutasAlternativas(int origen, int destino, Arco<?> corte) {
 		ArrayList<Integer> rutas = new ArrayList<>();
@@ -353,40 +358,45 @@ public class Algoritmo {
 	en la secuencia de tareas [0, 2, 5, 6, 10], ya que su tiempo de ejecución es la duración de
 	cada tarea más el tiempo de espera entre cada par de tareas: 70 horas.*/
 	
-	public void secuenciaTareas() {
+	public ArrayList<Integer> secuenciaTareas(Tarea origen) {
+		ArrayList<Integer> mejorCamino = new ArrayList<>();
 		
 		Iterator<Integer> it = this.grafo.obtenerVertices();
 		while (it.hasNext()) {
 			int verticeId = it.next();
 			colores.put(verticeId, "blanco");
 		}
-		this.tiempo = 0;
 		
 		it = this.grafo.obtenerVertices();
 		while (it.hasNext()) {
 			int verticeId = it.next();
-			if (colores.get(verticeId).equals("blanco"))
-				ej10visit(verticeId);
+			if (colores.get(verticeId).equals("blanco")) {
+				mejorCamino.addAll(ej10visit(verticeId));
+			}
+				
 		}
+		
+		return mejorCamino;
 		
 	}
 	
-	public void ej10visit(int vertice) {
+	public ArrayList<Integer> ej10visit(int vertice) {
 		
 		colores.put(vertice, "amarillo");
-		tiempo += 1;
-		descubrimiento.put(vertice, tiempo);
 		
 		Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
 		while(it.hasNext()) {
 			int adyacente = it.next();
 			if (colores.get(adyacente).equals("blanco"))
-				ej10visit(adyacente);
+				camino.add(vertice);
+				camino.addAll( ej10visit(adyacente));
 		}
 		
-		colores.put(vertice, "negro");
-		tiempo += 1;
-		finalizacion.put(vertice, tiempo);
+		
+		
+		colores.put(vertice, "blanco");
+		
+		return camino;
 		
 	}
 	
@@ -395,7 +405,5 @@ public class Algoritmo {
 		this.grafo.agregarVertice(tareas.getId());
 		this.colores.put(tareas.getId(), "blanco");
 	}
-	
-	
 	
 }
