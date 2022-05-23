@@ -3,6 +3,7 @@ package grafos;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class Algoritmo {
 	private Grafo<?> grafo;
@@ -203,7 +204,8 @@ public class Algoritmo {
 	
 	//Ejercicio 7.
 	
-	/*public ArrayList<Integer> caminoMasCorto(int origen, int destino) {
+	public ArrayList<Integer> caminoMasCorto(int origen, int destino) {
+		ArrayList<Integer> caminoCorto = new ArrayList<>(); 
 		vertices.clear();
 		Iterator<Integer> it = this.grafo.obtenerVertices();
 		
@@ -214,31 +216,47 @@ public class Algoritmo {
 		
 		int verticeId = origen;
 		if (!visitado.get(verticeId)) {
-			bfs_visit(verticeId, destino);
+			caminoCorto.addAll(bfs_visit(verticeId, origen, destino));
 		}
-		return vertices;
+		return caminoCorto;
 	}
 	
-	public ArrayList<Integer> bfs_visit(int vertice, int destino) {
+	public ArrayList<Integer> bfs_visit(int vertice, int origen, int destino) {
+		ArrayList<Integer> aux = new ArrayList<>(grafo.cantidadVertices()); 
+		ArrayList<Integer> camino = new ArrayList<>(); 
+		boolean encontrado = false;
+		int i = destino;
+		
 		visitado.put(vertice, true);
 		vertices.add(vertice);
 		
-		while(!vertices.isEmpty()) {
-			System.out.println(vertices);
+		while(!vertices.isEmpty() && !encontrado) {
 			int first = vertices.remove(0);
-			Iterator<Integer> it = this.grafo.obtenerAdyacentes(first);
+			Iterator<Integer> it = this.grafo.obtenerAdyacentes(first); 
 			while(it.hasNext()) {
 				int indice = it.next();
 				if(!visitado.get(indice)) {
 					visitado.put(indice, true);
 					vertices.add(indice);
+					aux.add(indice, first);
+					if(indice == destino) {
+						encontrado = true;
+					}
 				}
 			}	
 		}
-		return vertices;
-	} */
+		
+		while(i != origen && encontrado) {
+			camino.add(0,i);
+			i = aux.get(i);
+		}
+		if (encontrado) {
+			camino.add(0,i);
+		}
+		return camino;
+	} 
 	
-	public ArrayList<Integer> caminoMasCorto(int origen, int destino){
+/*	public ArrayList<Integer> caminoMasCorto(int origen, int destino){
 		ArrayList<Integer> arcos = new ArrayList<>();
 					
 		Iterator<Integer> it = this.grafo.obtenerVertices();
@@ -288,7 +306,7 @@ public class Algoritmo {
 		
 		
 		return caminoPosible;
-	}
+	}  */
 	
 	
 	/*Ejercicio 8
@@ -356,7 +374,7 @@ public class Algoritmo {
 	decir, la secuencia de tareas que resulta en el máximo tiempo empleado para su ejecución.
 	Por ejemplo: si partimos de la siguiente configuración podemos encontrar el camino crítico
 	en la secuencia de tareas [0, 2, 5, 6, 10], ya que su tiempo de ejecución es la duración de
-	cada tarea más el tiempo de espera entre cada par de tareas: 70 horas.*/
+	cada tarea más el tiempo de espera entre cada par de tareas: 70 horas.
 	
 	public ArrayList<Integer> secuenciaTareas(Tarea origen) {
 		ArrayList<Integer> mejorCamino = new ArrayList<>();
@@ -405,5 +423,5 @@ public class Algoritmo {
 		this.grafo.agregarVertice(tareas.getId());
 		this.colores.put(tareas.getId(), "blanco");
 	}
-	
+	*/
 }
